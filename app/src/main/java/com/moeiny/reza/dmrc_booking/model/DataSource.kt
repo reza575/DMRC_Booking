@@ -8,10 +8,12 @@ import org.json.JSONObject
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 import java.util.*
+import kotlin.collections.HashMap
 
 class DataSource {
     companion object {
 
+        var nodesMap =  HashMap<Long,Node>()
         var nodes =  ArrayList<Node>()
         var arcs =   HashMap<Long, Long>()
 
@@ -28,7 +30,9 @@ class DataSource {
                 val links = json.getJSONArray("links")
                 for (i in 0 until stations.length()) {
                     val station:JSONObject = stations.getJSONObject(i)
-                    nodes.add(Node(station))
+                    val newNode = Node(station)
+                    nodes.add(newNode)
+                    nodesMap.put(newNode.id, newNode)
                 }
                 for (i in 0 until links.length()) {
                     val link = links.getJSONObject(i)
@@ -41,5 +45,19 @@ class DataSource {
                 e.printStackTrace()
             }
         }
+
+        fun getName(id:Long): String {
+            if(!nodesMap.containsKey(id)){
+                return ""
+            }
+            return nodesMap.getValue(id).name
+        }
+        fun getNode(id:Long): Node? {
+            if(!nodesMap.containsKey(id)){
+                return null
+            }
+            return nodesMap.getValue(id)
+        }
+
     }
 }

@@ -1,5 +1,9 @@
 package com.moeiny.reza.dmrc_booking.view.fragments
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,23 +16,11 @@ import com.moeiny.reza.dmrc_booking.GraphProcessor
 import com.moeiny.reza.dmrc_booking.model.Node
 
 import com.moeiny.reza.dmrc_booking.R
-
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import java.io.File
+import java.io.FileOutputStream
 
 
 class Details(var start: Node?, var destination: Node?, var result: SearchResult) : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +49,26 @@ class Details(var start: Node?, var destination: Node?, var result: SearchResult
         var close = inflate.findViewById<Button>(R.id.close)
         close.setOnClickListener {
             result.onFail()
+        }
+        var share = inflate.findViewById<Button>(R.id.share)
+        share.setOnClickListener {
+            val cachePath = File(context!!.cacheDir, "images")
+            cachePath.mkdirs();
+            var imgFile = File(cachePath, "iage.jpg")
+            var bitmap = Bitmap.createBitmap(info.getWidth(), info.getHeight(), Bitmap.Config.ARGB_8888)
+            var canvas = Canvas(bitmap)
+            info.draw(canvas);
+            //canvas.drawText()
+            var fos =FileOutputStream (imgFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 95, fos)
+            fos.close()
+
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            val uriShareFile: Uri = Uri.fromFile(imgFile)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uriShareFile)
+            shareIntent.type = "*/*"
+            activity!!.startActivity(Intent.createChooser(shareIntent, "Send Ticket"))
         }
         return inflate
     }

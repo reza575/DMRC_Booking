@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.TextView
 import com.moeiny.reza.dmrc_booking.*
 import com.moeiny.reza.dmrc_booking.model.Node
+import com.moeiny.reza.dmrc_booking.model.Ticket
+import com.moeiny.reza.dmrc_booking.viewmodel.DMRCViewModel
 
 
 class Search : Fragment() {
@@ -19,10 +21,7 @@ class Search : Fragment() {
     var details: Button? = null;
     var register: Button? = null;
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val inflate = inflater.inflate(R.layout.fragment_search, container, false)
         details = inflate.findViewById<Button>(R.id.detail)
@@ -45,7 +44,10 @@ class Search : Fragment() {
         }
         register = inflate.findViewById<Button>(R.id.register)
         register!!.setOnClickListener {
-
+             var tsLong = System.currentTimeMillis();
+            var ticket=Ticket(tsLong, "" + startNode!!.id , "" + destinationNode!!.id )
+            MainActivity.activity.viewModel.saveTicket(ticket)
+            register!!.isEnabled = false;
         }
         extraButtons()
         var hintStart = inflate.findViewById<TextView>(R.id.hint_start)
@@ -114,7 +116,6 @@ class Search : Fragment() {
         register!!.isEnabled = true;
 
 
-     /*   */
     }
 
 }

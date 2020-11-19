@@ -7,67 +7,70 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Toast
+import com.moeiny.reza.dmrc_booking.MainActivity
 
 import com.moeiny.reza.dmrc_booking.R
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.moeiny.reza.dmrc_booking.model.DataSource
+import com.moeiny.reza.dmrc_booking.model.Node
+import com.moeiny.reza.dmrc_booking.model.Ticket
 
 
 class History : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var list: ListView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false)
-    }
-
-
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-
-    interface OnFragmentInteractionListener {
-        fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            History().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val inflate = inflater.inflate(R.layout.fragment_history, container, false)
+        list= inflate.findViewById<ListView>(R.id.historyList)
+        MainActivity.activity.viewModel.loadTicket(this::process)
+        list.setOnItemClickListener(object: AdapterView.OnItemClickListener{
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                var item:Ticket = list.adapter.getItem(position) as Ticket
+                var startNode = DataSource.getNode(item.source.toLong())
+                var destinationNode = DataSource.getNode(item.destination.toLong())
+                if(startNode == null || destinationNode == null){
+                    return;
                 }
+                val fm1 = MainActivity.activity.supportFragmentManager
+                val fragmentTransaction = fm1.beginTransaction()
+                var detailFragment = Details(startNode, destinationNode, object : SearchResult {
+                    override fun onSuccess(node: Node) {
+                    }
+
+                    override fun onFail() {
+                        val fm1 = MainActivity.activity.supportFragmentManager
+                        val fragmentTransaction = fm1.beginTransaction()
+                        fragmentTransaction.replace(R.id.mainFragment, this@History);
+                        fragmentTransaction.commit();
+                    }
+                })
+                fragmentTransaction.replace(R.id.mainFragment, detailFragment);
+                fragmentTransaction.commit();
             }
+        })
+        return inflate
     }
+
+    fun process(result: Int?, tickets: ArrayList<Ticket>): Int {
+        if (result == 0 || result == -1) {
+            var adapter =
+                ArrayAdapter<Ticket>(context!!, android.R.layout.simple_list_item_1, tickets)
+            list.adapter = adapter;
+        } else if (result == 1) {
+            // Toast.makeText(this, "Connection Failed", Toast.LENGTH_SHORT).show()
+        }
+        return 0
+    }
+
 }

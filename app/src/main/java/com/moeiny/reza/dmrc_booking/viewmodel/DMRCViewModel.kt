@@ -45,7 +45,7 @@ class DMRCViewModel : ViewModel() {
     //function to Loading saved Data from Database to Application
     var loadTickets = false
     @Synchronized
-    fun loadNotes(process: (result: Int?, notes: ArrayList<Ticket>) -> Int) {
+    fun loadTicket(process: (result: Int?, tickets: ArrayList<Ticket>) -> Int) {
         if (loadTickets) {
             process(-1, ticketArray)
             return

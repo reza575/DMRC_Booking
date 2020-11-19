@@ -5,7 +5,7 @@ import org.json.JSONObject
 
 class Node(station: JSONObject) {
     var id: Long = 0
-    var name: String? = null
+    var name: String = ""
     var isExchange = false
 
 

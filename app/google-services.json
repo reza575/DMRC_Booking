@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "192721665983",
+    "firebase_url": "https://dmrcbooking.firebaseio.com",
+    "project_id": "dmrcbooking",
+    "storage_bucket": "dmrcbooking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192721665983:android:951e17322c371884bcab0a",
+        "android_client_info": {
+          "package_name": "com.moeiny.reza.dmrc_booking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192721665983-g65bn2gu7ciksq8botfiqmothb1amfk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moeiny.reza.dmrc_booking",
+            "certificate_hash": "cd41e096299b051c7c756c001774de6e9a683c9b"
+          }
+        },
+        {
+          "client_id": "192721665983-vlfiq0h76541mb5k144ved6525m6efmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKDLAQ2nLbUCMJ2PWXCwuMCFBgtZ-Ep6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192721665983-vlfiq0h76541mb5k144ved6525m6efmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,62 @@
+{
+"stations": 
+[
+{
+"id": "1",
+"name": "Karol Bagh","isExchange": "False"},
+{"id": "2","name": "Jhande walan",
+"isExchange": "False"},
+{
+"id": "3",
+"name": "R.K.Ashram","isExchange": "False"},
+{"id": "4","name": "New Delhi",
+"isExchange": "False"},
+{
+"id": "5",
+"name": "Rajiv chowk","isExchange": "True"},
+{"id": "6","name": "Patel Chowk",
+"isExchange": "False"},
+{
+"id": "7",
+"name": "INA","isExchange": "False"},
+{"id": "8","name": "Barakh Amba",
+"isExchange": "False"},
+{
+"id": "9",
+"name": "Mandi House","isExchange": "True"},
+{"id": "10","name": "Okhla",
+"isExchange": "False"}
+],
+
+"links":
+[
+{
+"start": "1","end": "2"
+},
+{
+"start": "2","end": "3"
+},
+{
+"start": "3","end": "4"
+},
+{
+"start": "4","end": "5"
+},
+{
+"start": "4","end": "6"
+},
+{
+"start": "4","end": "8"
+},
+{
+"start": "6","end": "7"
+},
+{
+"start": "8","end": "9"
+},
+{
+"start": "9","end": "10"
+}
+]
+
+}

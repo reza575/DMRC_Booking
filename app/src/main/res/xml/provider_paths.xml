@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-path name="external_files" path="."/>
-    <external-path name="my_images" path="file:///data/user/0/com.moeiny.reza.dmrc_booking/cache/images/iage.jpg" />
 </paths>

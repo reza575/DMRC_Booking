@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +55,7 @@ class Details(var start: Node?, var destination: Node?, var result: SearchResult
         share.setOnClickListener {
             val cachePath = File(context!!.cacheDir, "images")
             cachePath.mkdirs();
-            var imgFile = File(cachePath, "iage.jpg")
+            var imgFile = File(cachePath, "img1.jpg")
             var bitmap = Bitmap.createBitmap(info.getWidth(), info.getHeight(), Bitmap.Config.ARGB_8888)
             var canvas = Canvas(bitmap)
             info.draw(canvas);
@@ -68,7 +69,7 @@ class Details(var start: Node?, var destination: Node?, var result: SearchResult
             val uriShareFile: Uri = Uri.fromFile(imgFile)
             shareIntent.putExtra(Intent.EXTRA_STREAM, uriShareFile)
             shareIntent.type = "*/*"
-            activity!!.startActivity(Intent.createChooser(shareIntent, "Send Ticket"))
+            activity!!.startActivity(Intent.createChooser(shareIntent, "Share Ticket"))
         }
         return inflate
     }
